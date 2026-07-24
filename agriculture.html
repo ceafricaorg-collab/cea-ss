@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agriculture | Castlerock Econetwork Africa</title>
+<meta name="description" content="CEA's Agriculture division — sustainable food systems, agribusiness investment, and rural development across Africa.">
+<style>
+  :root {
+    --forest: #1B4332;
+    --forest-dark: #0F2B1F;
+    --amber: #C8880A;
+    --cream: #F7F3ED;
+    --text: #0D1A0F;
+    --muted: #5A6355;
+    --bg: #F7F3ED;
+    --card-bg: #fff;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0F2B1F;
+      --card-bg: #1B4332;
+      --text: #E8F5E9;
+      --muted: #A5C4A5;
+      --cream: #0F2B1F;
+    }
+  }
+  :root[data-theme="light"] { --bg: #F7F3ED; --card-bg: #fff; --text: #0D1A0F; --muted: #5A6355; }
+  :root[data-theme="dark"]  { --bg: #0F2B1F; --card-bg: #1B4332; --text: #E8F5E9; --muted: #A5C4A5; }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
+
+  nav {
+    background: var(--forest-dark);
+    padding: 0 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px; position: sticky; top: 0; z-index: 100;
+  }
+  .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .nav-logo-mark { width: 36px; height: 36px; border-radius: 8px; background: var(--amber); display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 16px; color: #fff; }
+  .nav-logo-text { font-size: 15px; font-weight: 700; color: #fff; line-height: 1.2; }
+  .nav-logo-text span { display: block; font-size: 10px; font-weight: 400; color: rgba(255,255,255,0.6); letter-spacing: 0.04em; text-transform: uppercase; }
+  .nav-back { font-size: 13px; color: rgba(255,255,255,0.75); text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color 0.2s; }
+  .nav-back:hover { color: #fff; }
+
+  main { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 80px 24px; text-align: center; }
+
+  .badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--forest); color: #fff;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 6px 14px; border-radius: 999px; margin-bottom: 28px;
+  }
+  .badge-dot { width: 7px; height: 7px; border-radius: 50%; background: #6BCB77; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+  .icon-wrap {
+    width: 96px; height: 96px; border-radius: 50%;
+    background: linear-gradient(135deg, #1B4332, #2D6A4F);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 44px; margin: 0 auto 32px; box-shadow: 0 8px 32px rgba(27,67,50,0.3);
+  }
+  h1 { font-family: Georgia, 'Times New Roman', serif; font-size: clamp(32px, 6vw, 56px); font-weight: 700; color: var(--forest); margin-bottom: 16px; line-height: 1.15; text-wrap: balance; }
+  :root[data-theme="dark"] h1, @media (prefers-color-scheme: dark) { h1 { color: #A8D5B5; } }
+  .subtitle { font-size: clamp(15px, 2.5vw, 18px); color: var(--muted); max-width: 520px; margin: 0 auto 40px; line-height: 1.65; }
+
+  .coming-soon-box {
+    background: var(--card-bg);
+    border: 1px solid rgba(27,67,50,0.15);
+    border-radius: 20px;
+    padding: 40px 48px;
+    max-width: 560px; width: 100%;
+    margin: 0 auto 40px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+  }
+  .cs-label { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--amber); margin-bottom: 12px; }
+  .cs-title { font-size: 26px; font-weight: 800; color: var(--forest); margin-bottom: 10px; }
+  :root[data-theme="dark"] .cs-title { color: #A8D5B5; }
+  .cs-body { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+  .preview-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; max-width: 680px; margin: 0 auto 48px; }
+  .preview-card { background: var(--card-bg); border-radius: 14px; padding: 20px 18px; text-align: left; border: 1px solid rgba(27,67,50,0.1); }
+  .preview-card-icon { font-size: 24px; margin-bottom: 10px; }
+  .preview-card-title { font-size: 13px; font-weight: 700; color: var(--forest); margin-bottom: 4px; }
+  :root[data-theme="dark"] .preview-card-title { color: #A8D5B5; }
+  .preview-card-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  .notify-form { display: flex; gap: 10px; max-width: 400px; margin: 0 auto; flex-wrap: wrap; }
+  .notify-form input { flex: 1; min-width: 200px; padding: 12px 16px; border-radius: 10px; border: 1px solid rgba(27,67,50,0.2); background: var(--card-bg); color: var(--text); font-size: 14px; outline: none; }
+  .notify-form input:focus { border-color: var(--forest); }
+  .notify-form button { padding: 12px 22px; border-radius: 10px; background: var(--forest); color: #fff; font-size: 14px; font-weight: 700; border: none; cursor: pointer; white-space: nowrap; transition: background 0.2s; }
+  .notify-form button:hover { background: #2D6A4F; }
+  .notify-note { font-size: 12px; color: var(--muted); margin-top: 10px; }
+
+  footer { text-align: center; padding: 24px; font-size: 12px; color: var(--muted); border-top: 1px solid rgba(27,67,50,0.1); }
+  footer a { color: var(--forest); text-decoration: none; }
+  :root[data-theme="dark"] footer a { color: #A8D5B5; }
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-mark">C</div>
+    <div class="nav-logo-text">CEA Group <span>Castlerock Econetwork Africa</span></div>
+  </a>
+  <a href="index.html" class="nav-back">← Back to Home</a>
+</nav>
+
+<main>
+  <div class="badge"><span class="badge-dot"></span> Coming Soon</div>
+
+  <div class="icon-wrap">🌾</div>
+
+  <h1>Agriculture &amp; Agribusiness</h1>
+  <p class="subtitle">Sustainable food systems, agribusiness investment, and rural development initiatives connecting African farmers to global markets.</p>
+
+  <div class="coming-soon-box">
+    <div class="cs-label">Under Development</div>
+    <div class="cs-title">This page is coming soon</div>
+    <p class="cs-body">We're building out the Agriculture section of our platform. Soon you'll be able to explore our agribusiness projects, investment opportunities, and rural development programmes across Africa.</p>
+  </div>
+
+  <div class="preview-grid">
+    <div class="preview-card">
+      <div class="preview-card-icon">🌱</div>
+      <div class="preview-card-title">Sustainable Farming</div>
+      <div class="preview-card-desc">Eco-conscious agricultural practices for long-term food security.</div>
+    </div>
+    <div class="preview-card">
+      <div class="preview-card-icon">📦</div>
+      <div class="preview-card-title">Agro-Processing</div>
+      <div class="preview-card-desc">Value-added processing to reduce post-harvest losses and increase margins.</div>
+    </div>
+    <div class="preview-card">
+      <div class="preview-card-icon">🤝</div>
+      <div class="preview-card-title">Farmer Partnerships</div>
+      <div class="preview-card-desc">Connecting smallholder farmers to capital, technology, and markets.</div>
+    </div>
+    <div class="preview-card">
+      <div class="preview-card-icon">📊</div>
+      <div class="preview-card-title">Investment Portfolios</div>
+      <div class="preview-card-desc">Structured agri-investment vehicles with transparent returns.</div>
+    </div>
+  </div>
+
+  <p style="font-size:14px;color:var(--muted);margin-bottom:16px;">Get notified when Agriculture launches:</p>
+  <div class="notify-form">
+    <input type="email" placeholder="your@email.com" aria-label="Email address">
+    <button type="button">Notify Me</button>
+  </div>
+  <p class="notify-note">No spam. One email when the page goes live.</p>
+</main>
+
+<footer>
+  &copy; 2024 Castlerock Econetwork Africa Ltd. &nbsp;|&nbsp; <a href="index.html">ceagroup.org</a>
+</footer>
+
+<script>
+  document.querySelector(".notify-form button").addEventListener("click", function () {
+    var input = document.querySelector(".notify-form input");
+    if (!input.value || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value)) {
+      input.style.borderColor = "#e74c3c";
+      return;
+    }
+    input.style.borderColor = "";
+    this.textContent = "Noted!";
+    this.disabled = true;
+    input.disabled = true;
+  });
+</script>
+</body>
+</html>
