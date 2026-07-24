@@ -761,6 +761,133 @@ h1, h2, h3, h4 {
 }
 @media (max-width: 860px) { .footer-top { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 480px) { .footer-top { grid-template-columns: 1fr; } }
+
+/* ── Team card click affordance ── */
+.team-card { cursor: pointer; }
+.team-card:focus-visible { outline: 2px solid var(--forest); outline-offset: 3px; }
+
+/* ── Bio Modal ── */
+.bio-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10,20,12,0.72);
+  z-index: 500;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s;
+}
+.bio-overlay.open {
+  opacity: 1;
+  pointer-events: all;
+}
+@media (min-width: 640px) {
+  .bio-overlay { align-items: center; }
+}
+.bio-panel {
+  background: var(--white);
+  border-radius: 20px 20px 0 0;
+  width: 100%;
+  max-width: 680px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 32px 28px 40px;
+  transform: translateY(40px);
+  transition: transform 0.3s cubic-bezier(.22,.68,0,1.2);
+  position: relative;
+}
+.bio-overlay.open .bio-panel {
+  transform: translateY(0);
+}
+@media (min-width: 640px) {
+  .bio-panel {
+    border-radius: 20px;
+    transform: scale(0.95);
+  }
+  .bio-overlay.open .bio-panel { transform: scale(1); }
+}
+.bio-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--cream-dark);
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  transition: background 0.15s, color 0.15s;
+}
+.bio-close:hover { background: var(--forest); color: #fff; }
+.bio-header {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+.bio-photo {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--forest);
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+  border: 3px solid var(--border);
+}
+.bio-photo::before {
+  content: attr(data-initials);
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-family: Georgia, serif;
+  font-size: 24px;
+  font-weight: 700;
+}
+.bio-photo img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  border-radius: 50%;
+}
+.bio-meta { flex: 1; }
+.bio-name {
+  font-family: Georgia, serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 4px;
+  line-height: 1.25;
+}
+.bio-role {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--forest);
+}
+.bio-body {
+  font-size: 14.5px;
+  color: var(--muted);
+  line-height: 1.8;
+  white-space: pre-wrap;
+}
+.bio-body p { margin-bottom: 14px; }
+.bio-body p:last-child { margin-bottom: 0; }
 </style>
 </head>
 <body>
@@ -1080,7 +1207,7 @@ h1, h2, h3, h4 {
          and the photo will automatically replace the initials. -->
     <div class="team-grid">
 
-      <div class="team-card">
+      <div class="team-card" data-id="alfred-vasco-dauda">
         <div class="team-avatar" data-initials="AV">
           <img src="team/alfred-vasco-dauda.jpg" alt="Alfred Vasco Dauda — Managing Director, CEA Group" onerror="this.style.display='none'">
         </div>
@@ -1088,7 +1215,7 @@ h1, h2, h3, h4 {
         <span class="team-role">Managing Director</span>
       </div>
 
-      <div class="team-card">
+      <div class="team-card" data-id="dr-angelina-ugben">
         <div class="team-avatar" data-initials="AU">
           <img src="team/dr-angelina-ugben.jpg" alt="Dr. Angelina Ugben — Chief Executive Officer, CEA Group" onerror="this.style.display='none'">
         </div>
@@ -1096,7 +1223,7 @@ h1, h2, h3, h4 {
         <span class="team-role">Chief Executive Officer</span>
       </div>
 
-      <div class="team-card">
+      <div class="team-card" data-id="dr-innocent-idakwo">
         <div class="team-avatar" data-initials="II">
           <img src="team/dr-innocent-idakwo.jpg" alt="Dr. Innocent S. Idakwo — COO, CEA Group" onerror="this.style.display='none'">
         </div>
@@ -1104,7 +1231,7 @@ h1, h2, h3, h4 {
         <span class="team-role">Director of Operations (COO)</span>
       </div>
 
-      <div class="team-card">
+      <div class="team-card" data-id="blessing-mba-aja">
         <div class="team-avatar" data-initials="BM">
           <img src="team/blessing-mba-aja.jpg" alt="Blessing Olanma Mba Aja — CFO, CEA Group" onerror="this.style.display='none'">
         </div>
@@ -1112,7 +1239,7 @@ h1, h2, h3, h4 {
         <span class="team-role">Director of Finance (CFO)</span>
       </div>
 
-      <div class="team-card">
+      <div class="team-card" data-id="godspower-edafe">
         <div class="team-avatar" data-initials="GE">
           <img src="team/godspower-edafe.jpg" alt="Godspower Edafe — CTO, CEA Group" onerror="this.style.display='none'">
         </div>
@@ -1120,7 +1247,7 @@ h1, h2, h3, h4 {
         <span class="team-role">Director of IT (CTO)</span>
       </div>
 
-      <div class="team-card">
+      <div class="team-card" data-id="bishop-freedman-oloture">
         <div class="team-avatar" data-initials="FO">
           <img src="team/bishop-freedman-oloture.jpg" alt="Bishop Freedman Ekre Oloture — CSO, CEA Group" onerror="this.style.display='none'">
         </div>
@@ -1128,7 +1255,7 @@ h1, h2, h3, h4 {
         <span class="team-role">Director of Sustainability (CSO)</span>
       </div>
 
-      <div class="team-card">
+      <div class="team-card" data-id="michael-ekunke-owha">
         <div class="team-avatar" data-initials="MO">
           <img src="team/michael-ekunke-owha.jpg" alt="Michael Ekunke Owha — CMO, CEA Group" onerror="this.style.display='none'">
         </div>
@@ -1136,7 +1263,7 @@ h1, h2, h3, h4 {
         <span class="team-role">Director of Marketing (CMO)</span>
       </div>
 
-      <div class="team-card">
+      <div class="team-card" data-id="emmanuel-olorunyomi">
         <div class="team-avatar" data-initials="EO">
           <img src="team/emmanuel-olorunyomi.jpg" alt="Emmanuel Olorunyomi — CHRO, CEA Group" onerror="this.style.display='none'">
         </div>
@@ -1144,7 +1271,7 @@ h1, h2, h3, h4 {
         <span class="team-role">Director of HR (CHRO)</span>
       </div>
 
-      <div class="team-card">
+      <div class="team-card" data-id="adama-ojochogwu-innocent">
         <div class="team-avatar" data-initials="AO">
           <img src="team/adama-ojochogwu-innocent.jpg" alt="Adama Ojochogwu Innocent Esq. — Company Secretary, CEA Group" onerror="this.style.display='none'">
         </div>
@@ -1152,7 +1279,7 @@ h1, h2, h3, h4 {
         <span class="team-role">Company Secretary / Legal</span>
       </div>
 
-      <div class="team-card">
+      <div class="team-card" data-id="oluwasegun-bamigbaye">
         <div class="team-avatar" data-initials="OB">
           <img src="team/oluwasegun-bamigbaye.jpg" alt="Oluwasegun Bamigbaye — Head of Business Development, CEA Group" onerror="this.style.display='none'">
         </div>
@@ -1160,7 +1287,7 @@ h1, h2, h3, h4 {
         <span class="team-role">Head of Business Development</span>
       </div>
 
-      <div class="team-card">
+      <div class="team-card" data-id="azeez-azi-ovurevu">
         <div class="team-avatar" data-initials="AZ">
           <img src="team/azeez-azi-ovurevu.jpg" alt="Azeez Azi Ovurevu — Deputy Director Legal, CEA Group" onerror="this.style.display='none'">
         </div>
@@ -1168,12 +1295,12 @@ h1, h2, h3, h4 {
         <span class="team-role">Deputy Director Legal</span>
       </div>
 
-      <div class="team-card">
-        <div class="team-avatar" data-initials="PB">
-          <img src="team/peter-a-boman.jpg" alt="Peter A. Boman — Land Surveyor, CEA Group" onerror="this.style.display='none'">
+      <div class="team-card" data-id="adebayo-ibitomi">
+        <div class="team-avatar" data-initials="AI">
+          <img src="team/adebayo-ibitomi.jpg" alt="Adebayo J. Ibitomi — Head of Finance, CEA Group" onerror="this.style.display='none'">
         </div>
-        <strong>Peter A. Boman</strong>
-        <span class="team-role">Land Surveyor</span>
+        <strong>Adebayo J. Ibitomi</strong>
+        <span class="team-role">Head of Finance / Company Accountant</span>
       </div>
 
     </div>
@@ -1318,8 +1445,26 @@ h1, h2, h3, h4 {
   </div>
 </footer>
 
+<!-- Bio Modal -->
+<div class="bio-overlay" id="bioOverlay" role="dialog" aria-modal="true" aria-labelledby="bioName">
+  <div class="bio-panel" id="bioPanel">
+    <button class="bio-close" id="bioClose" aria-label="Close">&times;</button>
+    <div class="bio-header">
+      <div class="bio-photo" id="bioPhoto" data-initials="">
+        <img id="bioImg" src="" alt="" onerror="this.style.display='none'">
+      </div>
+      <div class="bio-meta">
+        <div class="bio-name" id="bioName"></div>
+        <div class="bio-role" id="bioRole"></div>
+      </div>
+    </div>
+    <div class="bio-body" id="bioBody"></div>
+  </div>
+</div>
+
 <script>
 (function () {
+  // ── Nav toggle ──
   var toggle = document.getElementById("navToggle");
   var links = document.getElementById("navLinks");
   if (toggle && links) {
@@ -1334,6 +1479,203 @@ h1, h2, h3, h4 {
       });
     });
   }
+
+  // ── Team bio data ──
+  var BIOS = {
+    "alfred-vasco-dauda": {
+      name: "Alfred Vasco Dauda",
+      role: "Managing Director",
+      initials: "AV",
+      photo: "team/alfred-vasco-dauda.jpg",
+      bio: [
+        "Alfred Vasco Dauda is the visionary Managing Director of Castlerock Econetwork Africa LTD (CEA), providing the strategic leadership that drives the company's mission to integrate sustainable practices across Africa's agribusiness, renewable energy, and smart building sectors.",
+        "A seasoned Town Planner and sustainable development expert, Alfred brings a wealth of experience in strategic visioning, sector integration, and financial oversight. He is currently spearheading the execution of CEA's ambitious 10-Year Strategic Plan (2025–2034), positioning the company as a leader in sustainable development. Under his leadership, CEA is expanding into new markets while championing the adoption of eco-friendly practices and cutting-edge technologies like IoT and AI to enhance project productivity and sustainability.",
+        "His capabilities are well-suited for the demands of stakeholder management, securing financing through green bonds and public-private partnerships, and guiding the delivery of strategic projects such as sustainable agricultural and green housing initiatives.",
+        "Core competencies: Strategic Leadership & Vision · Stakeholder & Financial Management · Sustainability & Innovation Integration · Project Execution & Performance Monitoring · Team Leadership & Organisational Development.",
+        "With a strong academic background in Urban and Regional Planning, complemented by certifications in Generative AI, Sustainable Entrepreneurship, and Urban Governance, Alfred combines technical expertise with executive acumen to deliver projects that are financially robust and create lasting social and environmental impact."
+      ]
+    },
+    "dr-angelina-ugben": {
+      name: "Dr. Angelina Ugben",
+      role: "Director / Chief Executive Officer",
+      initials: "AU",
+      photo: "team/dr-angelina-ugben.jpg",
+      bio: [
+        "Dr. Angelina Ugben is a highly respected Nigerian advocate at the intersection of disability rights, sustainable development, and women's empowerment. Renowned for her commitment to social justice, she champions the integration of persons with disabilities (PWDs) into climate action, inclusive governance, and economic development across Africa and beyond.",
+        "As Founder and President of the Global Disabilities Green Initiative (GDGI), launched in June 2025 at Nigeria's National Assembly Complex, she leads efforts to empower 10,000 PWDs as 'green leaders' by 2030 through programmes in renewable energy, sustainable agriculture, and climate resilience — redefining PWDs' role in Africa's green economy.",
+        "Dr. Ugben also serves as Executive Director of the Inclusive Skills Development Initiative (ISDI), delivering practical training for PWDs to thrive in various sectors. As National Social Welfare Secretary of the Joint National Association of Persons with Disabilities (JONAPWD), she shapes inclusive policies through nationwide tree-planting campaigns and solar lamp distributions to students with disabilities.",
+        "A visionary social entrepreneur, she founded God's Habitation International to equip PWDs — especially women and girls — with business tools and training. As a 2023 Tony Elumelu Foundation Entrepreneurship Programme alumna, she showcases PWD entrepreneurs' potential on the global stage.",
+        "Her impact has earned recognition: named one of the 100 Most Influential Women in Africa by Women Who Win Africa; honoured with the Challenge Champion and Heroes Award in 2024; and awarded an Honorary Doctorate in Philosophy by the United Graduate College and Seminary International (USA).",
+        "As a founding Director and CEO at CEA, she guides strategic initiatives in sustainable development, leveraging her expertise to foster innovative, eco-conscious growth."
+      ]
+    },
+    "dr-innocent-idakwo": {
+      name: "Dr. Innocent S. Idakwo, Ph.D., CLN",
+      role: "Chief Operating Officer (COO)",
+      initials: "II",
+      photo: "team/dr-innocent-idakwo.jpg",
+      bio: [
+        "Dr. Innocent Sunday Idakwo, Ph.D., CLN, is the Chief Operating Officer (COO), responsible for overseeing the day-to-day administrative and operational functions of the organisation. He works closely with the CEO and leadership team to implement strategic initiatives, enhance operational efficiency, and drive sustainable organisational growth.",
+        "A visionary and seasoned academic professional, Dr. Idakwo brings over 15 years of rich, diversified experience across multiple sectors. His expertise spans administration, research, management, and organisational development — positioning him as a transformative leader committed to excellence, innovation, and impactful service.",
+        "Key responsibilities: Strategic Execution — translating the organisation's long-term vision into actionable operational plans. Operational Leadership — coordinating daily business across production, finance, HR, marketing, and customer service. Performance Management — establishing KPIs and ensuring departments meet organisational objectives. Process Improvement — introducing innovative systems and policies that enhance productivity. Financial Oversight — collaborating with the CFO to manage budgets and optimise resource allocation. Talent Management — mentoring teams to nurture a culture of accountability and continuous improvement. Risk & Compliance — ensuring legal and regulatory standards are upheld. Stakeholder Engagement — representing the organisation in high-level negotiations and strategic partnerships."
+      ]
+    },
+    "blessing-mba-aja": {
+      name: "Mrs. Blessing Olanma Mba Aja, ACA",
+      role: "Director of Finance / Chief Financial Officer",
+      initials: "BM",
+      photo: "team/blessing-mba-aja.jpg",
+      bio: [
+        "Mrs. Blessing Olanma Mba Aja is a distinguished Chartered Accountant with over two decades of expertise in delivering financial and corporate management services to private and public sector organisations across diverse industries.",
+        "A graduate of Abia State Polytechnic, Aba — where she earned an HND in Accounting — she is an Associate Member of the Institute of Chartered Accountants of Nigeria (ICAN), a Member of the Nigerian Institute of Management (NIM), and a Registered Professional with the Financial Reporting Council of Nigeria (FRC).",
+        "Her extensive career has honed her skills in strategic financial planning, risk management, and regulatory compliance, enabling her to drive fiscal efficiency and sustainable growth in complex economic environments.",
+        "As a founding Director and CFO at Castlerock Econetwork Africa Ltd (CEA), Blessing plays a pivotal role in steering the company's financial strategy, ensuring robust governance, and aligning resources with CEA's mission to foster innovative, eco-friendly development across agriculture, renewable energy, and smart real estate sectors."
+      ]
+    },
+    "godspower-edafe": {
+      name: "Godspower Edafe",
+      role: "Director of IT (CTO)",
+      initials: "GE",
+      photo: "team/godspower-edafe.jpg",
+      bio: [
+        "Godspower Edafe serves as Director of Information Technology and Chief Technology Officer at Castlerock Econetwork Africa Ltd (CEA), leading the company's technology strategy and digital transformation agenda.",
+        "He oversees the design, deployment, and management of CEA's technology infrastructure — including the digital platforms that power the company's property marketplace, data systems, and operational workflows across all three business pillars.",
+        "Biography coming soon."
+      ]
+    },
+    "bishop-freedman-oloture": {
+      name: "Bishop Freedman Ekre Oloture",
+      role: "Director of Sustainability (CSO)",
+      initials: "FO",
+      photo: "team/bishop-freedman-oloture.jpg",
+      bio: [
+        "Bishop Freedman Ekre Oloture is a revered spiritual leader with over two decades of unwavering dedication to prayer, evangelism, and discipleship. As the founder of His Counsel Assembly, a vibrant Pentecostal denomination, he has ignited faith across rural and urban communities, transforming lives through the gospel of Christ.",
+        "A man of unyielding integrity, Bishop Oloture's ministry is deeply intertwined with his passion for nature and environmental stewardship. He champions organic practices over inorganic methods, advocating for sustainable living that honours God's creation. His exceptional stakeholder engagement skills have propelled His Counsel Assembly's growth, forging alliances that amplify outreach and community impact.",
+        "Committed to empowered communities, Bishop Oloture invests in young minds through teachings on wealth creation via hard work and intentional planning, equipping the next generation for holistic success.",
+        "As Director of Sustainability at Castlerock Econetwork Africa LTD (CEA), he brings this visionary ethos to drive eco-friendly initiatives — blending faith-inspired principles with innovative strategies to foster resilient, green economies across Africa."
+      ]
+    },
+    "michael-ekunke-owha": {
+      name: "Michael Ekunke Owha",
+      role: "Director of Marketing (CMO)",
+      initials: "MO",
+      photo: "team/michael-ekunke-owha.jpg",
+      bio: [
+        "Michael Ekunke Owha is a highly accomplished and results-oriented professional with extensive experience in strategic planning, project management, and business development. He brings a unique blend of urban and regional planning expertise to the realm of marketing, driven by a passion for innovation and sustainable growth.",
+        "Core competencies: Strategic Marketing & Brand Development — proven ability to formulate and execute comprehensive marketing strategies that enhance brand visibility and drive revenue growth. Project Management & Execution — expertise in managing complex projects from conception to completion, ensuring on-time, within-budget delivery. Communication & Interpersonal Skills — exceptional negotiation skills enabling effective collaboration with cross-functional teams and stakeholders. Analytical & Problem-Solving Acumen — adept at analysing market trends and developing innovative solutions. Technical Proficiency — skilled in MS Office Suite, AutoCAD, SketchUp 3D, Google Earth, and GIS for data analysis. Leadership & Team Management — a natural leader with experience in sustainable development volunteer work. Drone Piloting & Site Management — experienced in managing daily site activities and providing professional guidance.",
+        "As Chief Marketing Officer at Castlerock Econetwork Africa Ltd, Michael leads the company's marketing initiatives to drive brand awareness and growth across all three business pillars."
+      ]
+    },
+    "emmanuel-olorunyomi": {
+      name: "Emmanuel Olorunyomi",
+      role: "Director of Human Resources (CHRO)",
+      initials: "EO",
+      photo: "team/emmanuel-olorunyomi.jpg",
+      bio: [
+        "Emmanuel Olorunyomi is a seasoned Nigerian administrator with expertise in higher and foundational education management. He holds a BSc in Business Management from the University of Jos and a Master's degree in Business Administration from the National Open University of Nigeria (NOUN).",
+        "Known for excellence in administrative roles, he has been a key figure in institutional operations at Baze University, Abuja — a private tertiary institution established in 2011, focused on international-standard education.",
+        "He has demonstrated versatile administrative leadership across multiple faculties and strategic units: as Faculty Officer across the Faculties of Environmental Sciences, Engineering, and Management & Social Sciences, providing high-level administrative support and faculty governance; and currently as Assistant Registrar and Secretary to the Consultancy, Research and Development Unit — serving as central coordinator for the university's non-academic ventures, external partnerships, and innovation-driven initiatives, driving collaboration between academia and industry.",
+        "As Director of Human Resources and CHRO at Castlerock Econetwork Africa Ltd, Emmanuel brings his deep organisational and people-management expertise to build and develop the CEA team."
+      ]
+    },
+    "adama-ojochogwu-innocent": {
+      name: "Adama Ojochogwu Innocent, Esq.",
+      role: "Company Secretary / Director of Legal",
+      initials: "AO",
+      photo: "team/adama-ojochogwu-innocent.jpg",
+      bio: [
+        "Adama Ojochogwu Innocent, Esq., graduated from the prestigious Ahmadu Bello University (ABU), Zaria, Nigeria. He proceeded to the Nigerian Law School, Lagos Campus and was called to the Nigerian Bar as a Barrister and Solicitor of the Supreme Court of Nigeria after a successful Bar Final Examination.",
+        "Adama, Esq. has been in active legal practice since his Call to Bar, with cutting-edge expertise in various fields of litigation and legal practice. He is the Principal Counsel of I.O. Adama & Co. Grace Chambers, a Law Firm registered with the Nigerian Corporate Affairs Commission (CAC) in 2015, with its Head Office in Abuja.",
+        "Education: LL.M — University of Abuja · B.L — Nigerian Law School, Lagos · LL.B — Ahmadu Bello University, Zaria · Diploma in Law — Ahmadu Bello University, Zaria.",
+        "Practice Areas: Environmental Laws, Corporate Laws, Property Laws, Cybercrimes and New Technologies, Intellectual Property, Telecommunications, Oil and Gas, Maritime Law, Human Rights, Arbitration, Mediation and Conciliation, Dispute Resolution.",
+        "Memberships: Nigerian Bar Association (NBA) · Association of Environmental Lawyers of Nigeria (AELN).",
+        "Adama, Esq. presently serves as Company Secretary and Director of Legal at Castlerock Econetwork Africa Ltd."
+      ]
+    },
+    "oluwasegun-bamigbaye": {
+      name: "Oluwasegun Bamigbaye",
+      role: "Director / Head of Business Development",
+      initials: "OB",
+      photo: "team/oluwasegun-bamigbaye.jpg",
+      bio: [
+        "Oluwasegun Bamigbaye Ayo is a dedicated professional from Ijumu Local Government Area of Kogi State, Nigeria, with a Bachelor of Arts in Mass Communication from the University of Jos — where he honed expertise in media, communication strategies, and information management.",
+        "A versatile leader with over a decade of experience, he excels in marketing, IT engineering, software and hardware repairs, and professional client relations. His unique fusion of communication prowess and technical acumen enables him to thrive in diverse environments, driving growth through strategic partnerships and innovative solutions.",
+        "Passionate about personal and professional development, Oluwasegun's interests in teaching, writing, and travel fuel his commitment to lifelong learning and knowledge-sharing.",
+        "As Director and Head of Business Development at Castlerock Econetwork Africa Ltd (CEA), he spearheads expansion efforts — leveraging his skills to forge B2B alliances and advance sustainable initiatives across agriculture, renewable energy, smart real estate, and emerging sectors."
+      ]
+    },
+    "azeez-azi-ovurevu": {
+      name: "Azeez Azi Ovurevu",
+      role: "Deputy Director Legal",
+      initials: "AZ",
+      photo: "team/azeez-azi-ovurevu.jpg",
+      bio: [
+        "Azeez Azi Ovurevu is a Nigerian Lawyer with extensive expertise in Property and Corporate Law. He is a Barrister and Solicitor of the Supreme Court of Nigeria, with strong professional interests in company secretarial services, regulatory compliance, tax law, legal drafting, and general corporate practice.",
+        "Beyond his legal career, Ovurevu has built significant experience in the real estate sector, working as a Property and Corporate Law Consultant, Property Investment Advisor, and Mortgage Consultant to individuals, corporate organisations, and Nigerians in the diaspora.",
+        "His work uniquely integrates legal advisory with practical real estate development — providing clients with strategic guidance on property investments, compliance obligations, and the financial structuring of real estate interests.",
+        "As Deputy Director Legal at Castlerock Econetwork Africa Ltd, he supports the company's legal framework across all property transactions and corporate governance matters."
+      ]
+    },
+    "adebayo-ibitomi": {
+      name: "Adebayo J. Ibitomi",
+      role: "Head of Finance / Company Accountant",
+      initials: "AI",
+      photo: "team/adebayo-ibitomi.jpg",
+      bio: [
+        "Adebayo J. Ibitomi is a seasoned finance professional with over a decade of expertise in financial accounting, auditing, corporate reporting, and regulatory compliance across Nigeria's dynamic business landscape. He holds a Bachelor's degree in Accounting, equipping him with a solid foundation in fiscal strategy and governance.",
+        "Renowned for his strategic insight and meticulous approach, Adebayo has played instrumental roles in shaping financial frameworks for mid-sized enterprises, optimising fiscal performance, and ensuring adherence to local and international reporting standards. His deep understanding of financial strategy, risk management, and resource allocation makes him an invaluable asset in driving sustainable growth.",
+        "As Head of Finance and Company Accountant at Castlerock Econetwork Africa Ltd (CEA), Adebayo oversees financial operations, budgeting, treasury management, and compliance — ensuring robust financial health as the company scales its innovative initiatives in agriculture, renewable energy, smart real estate, and technology.",
+        "With integrity and precision at the core of his practice, he is committed to building a solid financial foundation that supports CEA's vision of transformative, eco-conscious economic development across Africa."
+      ]
+    }
+  };
+
+  // ── Modal logic ──
+  var overlay = document.getElementById("bioOverlay");
+  var closeBtn = document.getElementById("bioClose");
+  var bioPhoto = document.getElementById("bioPhoto");
+  var bioImg = document.getElementById("bioImg");
+  var bioName = document.getElementById("bioName");
+  var bioRole = document.getElementById("bioRole");
+  var bioBody = document.getElementById("bioBody");
+
+  function openBio(id) {
+    var d = BIOS[id];
+    if (!d) return;
+    bioPhoto.setAttribute("data-initials", d.initials);
+    bioImg.src = d.photo;
+    bioImg.alt = d.name;
+    bioImg.style.display = "";
+    bioName.textContent = d.name;
+    bioRole.textContent = d.role;
+    bioBody.innerHTML = d.bio.map(function(p){ return "<p>" + p + "</p>"; }).join("");
+    overlay.classList.add("open");
+    document.body.style.overflow = "hidden";
+    closeBtn.focus();
+  }
+
+  function closeBio() {
+    overlay.classList.remove("open");
+    document.body.style.overflow = "";
+  }
+
+  closeBtn.addEventListener("click", closeBio);
+  overlay.addEventListener("click", function(e){
+    if (e.target === overlay) closeBio();
+  });
+  document.addEventListener("keydown", function(e){
+    if (e.key === "Escape") closeBio();
+  });
+
+  document.querySelectorAll(".team-card[data-id]").forEach(function(card) {
+    card.setAttribute("tabindex", "0");
+    card.setAttribute("role", "button");
+    card.setAttribute("aria-label", "Read biography of " + card.querySelector("strong").textContent);
+    card.addEventListener("click", function(){ openBio(card.dataset.id); });
+    card.addEventListener("keydown", function(e){
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openBio(card.dataset.id); }
+    });
+  });
 })();
 </script>
 </body>
