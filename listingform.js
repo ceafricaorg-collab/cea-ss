@@ -190,7 +190,7 @@
         verifyIdentityBtn.disabled = false;
         if (data.verified) {
           identityVerified = true;
-          verifyIdentityBtn.textContent = "Identity Verified";
+          verifyIdentityBtn.textContent = "Identity Verified ✓";
           verifyIdentityBtn.disabled = true;
           identityStatusEl.className = "form-status success";
           identityStatusEl.textContent = "Your identity has been verified against your Virtual NIN.";
@@ -200,6 +200,28 @@
           if (typeof fbq === "function") {
             fbq("trackCustom", "IdentityVerified");
           }
+
+          // Advance step indicator
+          var s1 = document.getElementById("stepItem1");
+          var s2 = document.getElementById("stepItem2");
+          var s3 = document.getElementById("stepItem3");
+          var c1 = document.getElementById("stepConn1");
+          var c2 = document.getElementById("stepConn2");
+          if (s1) { s1.classList.remove("active"); s1.classList.add("done"); }
+          if (s2) s2.classList.add("active");
+          if (c1) c1.classList.add("done");
+
+          // Reveal step 2 (property details) and step 3 (payment + submit)
+          var step2 = document.getElementById("step2Section");
+          var step3 = document.getElementById("step3Section");
+          if (step2) {
+            step2.classList.remove("hidden");
+            setTimeout(function () {
+              step2.scrollIntoView({ behavior: "smooth", block: "start" });
+            }, 100);
+          }
+          if (step3) step3.classList.remove("hidden");
+
           updateSubmitGate();
         } else {
           verifyIdentityBtn.textContent = "Verify My Identity";
@@ -291,8 +313,17 @@
           paymentRef = String(response.transaction_id);
           paymentStatusEl.className = "form-status success";
           paymentStatusEl.textContent = "Payment received. Reference: " + txRef;
-          payBtn.textContent = "Paid";
+          payBtn.textContent = "Paid ✓";
           payBtn.disabled = true;
+
+          // Advance step indicator to step 3
+          var s2done = document.getElementById("stepItem2");
+          var s3active = document.getElementById("stepItem3");
+          var c2done = document.getElementById("stepConn2");
+          if (s2done) { s2done.classList.remove("active"); s2done.classList.add("done"); }
+          if (s3active) s3active.classList.add("active");
+          if (c2done) c2done.classList.add("done");
+
           if (typeof gtag === "function") {
             gtag("event", "purchase", {
               transaction_id: paymentRef,
