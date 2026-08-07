@@ -87,7 +87,7 @@
     document.title = pageTitle;
 
     var desc = (listing.description || "").slice(0, 155);
-    var img = (listing.photos && listing.photos[0]) ? listing.photos[0] : "https://tubalcainmy.github.io/Mr-alfrad/logo.jpg";
+    var img = (listing.photos && listing.photos[0]) ? listing.photos[0] : "https://ceagroup.org/logo.jpg";
     setMeta("description", desc);
     setMeta("og:title", pageTitle, "property");
     setMeta("og:description", desc, "property");
@@ -202,8 +202,11 @@
         "</div>" +
         '<div class="detail-sticky">' +
           '<div class="detail-card">' +
-            '<span class="cea-verified-badge" style="position:static;display:inline-block;margin-bottom:10px;">&#10003; CEA Verified</span>' +
+            (typeof CEA_BADGES !== 'undefined'
+              ? '<div style="margin-bottom:14px;">' + CEA_BADGES.verified('md') + '</div>'
+              : '<span class="cea-verified-badge" style="position:static;display:inline-block;margin-bottom:10px;">&#10003; CEA Verified</span>') +
             titleBadgeHtml +
+            (typeof CEA_BADGES !== 'undefined' ? '<div style="margin-bottom:14px;">' + CEA_BADGES.badgeRow() + '</div>' : '') +
             '<p style="margin:4px 0 0;font-size:13px;color:var(--cea-muted);">' + escHtml(listing.propertyType || "") + " &bull; " + escHtml(listing.location || "") + "</p>" +
             '<div class="detail-price">' + priceFormatted + "</div>" +
             descHtml +

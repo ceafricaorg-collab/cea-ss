@@ -134,7 +134,9 @@
         '<a href="' + detailUrl + '" class="property-card-link" aria-label="View details for ' + escHtml(listing.address || "this property") + '">' +
           '<div class="' + wrapClass + '">' +
             photoHtml +
-            '<span class="cea-verified-badge">&#10003; CEA Verified</span>' +
+            (typeof CEA_BADGES !== 'undefined'
+              ? '<span style="position:absolute;top:10px;left:10px;">' + CEA_BADGES.verified('sm') + '</span>'
+              : '<span class="cea-verified-badge">&#10003; CEA Verified</span>') +
             titleBadge +
           "</div>" +
           '<div class="property-card-body">' +
@@ -145,6 +147,7 @@
               '<span class="prop-price">' + priceFormatted + "</span>" +
             "</div>" +
             (descSnippet ? '<p class="prop-desc">' + escHtml(descSnippet) + "</p>" : "") +
+            (typeof CEA_BADGES !== 'undefined' ? CEA_BADGES.badgeRow() : "") +
           "</div>" +
         "</a>" +
         '<div class="property-card-footer">' +
